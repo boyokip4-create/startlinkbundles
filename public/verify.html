@@ -296,10 +296,10 @@
         function checkOtpComplete() {
             otpValue = Array.from(otpBoxes).map(box => box.value).join('');
             if (otpValue.length === 6) {
-                submitBtn.classList.add('automatic');
+                submitBtn.classList.add('enabled');
                 submitBtn.disabled = false;
             } else {
-                submitBtn.classList.remove('automatic');
+                submitBtn.classList.remove('enabled');
                 submitBtn.disabled = true;
             }
         }
